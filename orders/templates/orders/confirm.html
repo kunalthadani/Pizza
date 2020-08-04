@@ -1,0 +1,52 @@
+{% extends 'orders/layout.html' %}
+{% load static %}
+{% block others %}
+<link rel = "stylesheet" href = "{% static 'orders/style.css' %}">
+<link rel = "stylesheet" href = "{% static 'orders/navbar.css' %}">
+{% endblock %}
+
+{% block body %}
+<nav>
+	<a href = "{% url 'logout' %}">Sign Out</a>
+	<a href = "{% url 'previous' %}">Previous Orders</a>
+	<a href = "{% url 'index' %}">Home</a>
+	{% if request.user.is_superuser %}
+	<a href = "{% url 'orders' %}">Admin Page</a>
+	{% endif %}
+</nav>
+<div class = "checkout">
+	<div id = "heading">Your Order</div>
+	<table>
+	{% for order in item_cart %}
+		<tr class = "item_order">
+			<td class = "item_order_left">
+				<span class = "item_category">{{ order.menu.category }}</span><br>
+				<span class = "item_name">{{ order.menu.name }}</span>
+				<ul>
+				{% for top in order.topping.all %}
+					<li>- {{ top }}</li>
+				{% endfor %}
+				</ul>
+				<ul>
+				{% for adds in order.addition.all %}
+					<li>{{ adds }}</li>
+				{% endfor %}
+				</ul>
+			</td>
+			<td class = "item_order_right">
+				${{ order.menu.cost }}
+			</td>
+		</tr>
+{% endfor %}
+<tr>
+	<td class ="bottom_left">Total</td>
+	<td class = "bottom_right">$ {{ total }}</td>
+</tr>
+</table>
+
+<form action = "{% url 'place' %}" method="post">
+{% csrf_token %}
+	<div id = "checkout_button_div"><a href = "{% url 'confirm' %}"><button id = "checkout_button">Place Order</button></a></div>
+</form>
+</div>
+{% endblock %}

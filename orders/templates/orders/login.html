@@ -1,0 +1,21 @@
+{% extends "orders\layout.html" %}
+{% load static %}
+{% block others %}
+<title> Pinnochio’s Pizza & Subs</title>
+<link rel = "stylesheet" href = "{% static 'orders/login-style.css'%}">
+{% endblock %}
+
+{% block body %}
+<div id = "img_div">
+<img src = "{% static 'orders/Pizza.jpg' %}" id = "main_img">
+</div>
+<div id = "login_div">
+	<span>Welcome!</span>
+	<form action = "{% url 'login' %}" method = "post" id = "login_form">
+		{% csrf_token %}
+		<input type = "text" name = "username" placeholder="Username" autocomplete="off"><br>
+		<input type = "password" name = "password" placeholder="Password"><br>
+		<button>LOGIN</button>
+	</form>
+</div>
+{% endblock %}

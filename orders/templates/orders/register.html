@@ -1,0 +1,23 @@
+{% extends "orders\layout.html" %}
+{% load static %}
+
+{% block others %}
+<link rel = "stylesheet" href = "{% static 'orders/login-style.css'%}">
+{% endblock %}
+
+{% block body %}
+	<div id = "img_div">
+		<img src = "{% static 'orders/Pizza.jpg' %}" id = "main_img">
+	</div>
+	<div id = "login_div">
+		<span>Welcome!</span>
+		<form action = "{% url 'registered' %}" method="post"  id = "login_form">
+			{% csrf_token %}
+			<input type="text" name="first_name" autocomplete="off" placeholder="First Name">
+			<input type = "text" autocomplete="off" name = "username" placeholder="Username">
+			<input type = "password" name = "password" placeholder="Password">
+			<input type="email" name="email" placeholder="E-mail Address" autocomplete="off">
+			<button>Register</button>
+		</form>
+	</div>
+{% endblock %}

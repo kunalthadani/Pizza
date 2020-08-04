@@ -1,0 +1,67 @@
+{% extends "orders/layout.html" %}
+{% load static %}
+
+
+{% block others %}
+<script>
+	
+document.addEventListener('DOMContentLoaded',function(){
+	document.querySelectorAll('.add_button').forEach(function(button){
+		button.onclick = function(){
+			current = button.dataset.item_id;
+			no_of_toppings = button.dataset.no_toppings;
+			console.log(current);
+			document.querySelector('.topping').style.display = 'Block';
+			document.querySelector('#menu_item').value = parseInt(current);
+		};
+	});
+});
+
+
+</script>
+<link rel = "stylesheet" href = "{% static 'orders/stylemenu.css' %}">
+<link rel = "stylesheet" href = "{% static 'orders/navbar.css'%}">
+{% endblock %}
+
+{% block body %}
+<nav>
+	<a href = "{% url 'logout' %}">Sign Out</a>
+	<a href = "{% url 'previous' %}">Previous Orders</a>
+	<a href = "{% url 'index' %}">Home</a>
+	{% if request.user.is_superuser %}
+	<a href = "{% url 'orders' %}">Admin Page</a>
+	{% endif %}
+</nav>
+{% for item in menu %}
+<div class = "items">
+	<table>
+		<tr>
+			<td><span class = "item_name">{{ item.name }}</span><br><span class = "item_size">{{ item.size }}</span><br><span class = "item_cost">${{item.cost}}</span></td>
+			<td class="button_right"><button data-item_id="{{ item.id }}" data-no_toppings = "{{ item.no_of_toppings }}" data-cost = "{{ item.cost }}" data-size = "{{ item.size }}" data-name = "{{ item.name }}"class = "add_button">Add to Cart</button></td>
+		</tr>
+	</table>
+</div>
+{% endfor %}
+
+<div class = "topping">
+	<div class = "details">
+					<span id = "name_order"></span><br>
+					<span id = "size_order"></span>
+	</div>
+	<form action = "{% url 'cart' %}" method="post">
+		{% csrf_token %}
+		<div class = "top_div">
+		{% for addition in additions %}
+		<div class = "topping_box">
+		<label><input type = "checkbox" name = "addition" value = "{{ addition.id }}">{{ addition.name }} - {{addition.cost}}</label>
+		</div>
+		{% endfor %}
+		</div>
+
+		<input type = "hidden" name = "menu_item" id = "menu_item">
+		<div class = "button_div">
+		<button>Send</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

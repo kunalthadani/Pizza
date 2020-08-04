@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pizza</title>
+	{% block others %}{% endblock %}
+	<style type="text/css">
+		.topping{
+			display: none;
+		}
+	</style>
+	<link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+</head>
+<body>
+	{% block body %}{% endblock %}
+</body>
+</html>

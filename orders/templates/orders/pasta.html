@@ -1,0 +1,36 @@
+
+
+{% extends "orders/layout.html" %}
+{% load static %}
+
+
+{% block others %}
+<script src = "{% static 'orders/script.js' %}"></script>
+<link rel = "stylesheet" href = "{% static 'orders/stylemenu.css' %}">
+<link rel = "stylesheet" href = "{% static 'orders/navbar.css' %}">
+{% endblock %}
+
+{% block body %}
+<nav>
+	<a href = "{% url 'logout' %}">Sign Out</a>
+	<a href = "{% url 'previous' %}">Previous Orders</a>
+	<a href = "{% url 'index' %}">Home</a>
+	{% if request.user.is_superuser %}
+	<a href = "{% url 'orders' %}">Admin Page</a>
+	{% endif %}
+</nav>
+<form action = "{% url 'cart' %}" method="post">
+{% for item in menu %}
+	{% csrf_token %}
+<div class = "items">
+	<table>
+		<tr>
+			<td><span class = "item_name">{{ item.name }} </span><br><span class = "item_size">{{ item.size }}</span><br><span class = "item_cost">${{item.cost}}</span></td>
+			<td class="button_right"><button  type="submit" name = "menu_item" value ="{{ item.id }}">Add to Cart</button></td>
+		</tr>
+	</table>
+</div>
+{% endfor %}
+</form>
+
+{% endblock %}

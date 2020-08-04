@@ -1,0 +1,115 @@
+{% extends "orders/layout.html" %}
+{% load static %}
+{% block others %}
+<link rel = "stylesheet" href = "{% static 'orders/style.css' %}">
+<link rel = "stylesheet" href = "{% static 'orders/navbar.css' %}">
+{% endblock %}
+{% block body %}
+<!-- <div class = "nav_bar">
+	<a href = "{% url 'logout' %}">Log-out</a>
+</div> -->
+
+<nav>
+	<a href = "{% url 'logout' %}">Sign Out</a>
+	<a href = "{% url 'previous' %}">Previous Orders</a>
+	{% if request.user.is_superuser %}
+	<a href = "{% url 'orders' %}">Admin Page</a>
+	{% endif %}
+</nav>
+<div class="container">
+	<div class = "item">
+		<a href = "{% url 'page' 1 %}">
+			<div class = "item_img">
+				<img src = "{% static 'orders/regular_pizza.jpg' %}">
+			</div>
+			<div class = "category_name">
+				Regular Pizza
+			</div>
+		</a>
+	</div>
+	<div class = "item">
+		<a href = "{% url 'page' 2 %}">
+			<div class = "item_img">
+				<img src = "{% static 'orders/sicilian_pizza.jpg' %}">
+			</div>
+			<div class = "category_name">
+				Sicilian Pizza
+			</div>
+		</a>
+	</div>
+	<div class = "item">
+		<a href = "{% url 'page' 3 %}">
+			<div class = "item_img">
+				<img src = "{% static 'orders/subs.jpg' %}">
+			</div>
+			<div class = "category_name">
+				Subs
+			</div>
+		</a>
+	</div>
+	<div class = "item">
+		<a href = "{% url 'page' 4 %}">
+			<div class = "item_img">
+				<img src = "{% static 'orders/pasta.jpg' %}">
+			</div>
+			<div class = "category_name">
+				Pasta
+			</div>
+		</a>
+	</div>
+	<div class = "item">
+		<a href = "{% url 'page' 5 %}">
+			<div class = "item_img">
+				<img src = "{% static 'orders/salad.jpg' %}">
+			</div>
+			<div class = "category_name">
+				Salads
+			</div>
+		</a>
+	</div>
+	<div class = "item">
+		<a href = "{% url 'page' 6 %}">
+			<div class = "item_img">
+				<img src = "{% static 'orders/platter.jpg' %}">
+			</div>
+			<div class = "category_name">
+				Dinner Platters
+			</div>
+		</a>
+	</div>
+</div>
+<div class = "checkout">
+<div id = "heading">Your Order</div>
+<table>
+{% for order in item_cart %}
+<tr class = "item_order">
+	<td class = "item_order_left">
+		<span class = "item_category">{{ order.menu.category }}</span><br>
+		<span class = "item_name">{{ order.menu.name }}</span>
+		<ul>
+		{% for top in order.topping.all %}
+			<li>- {{ top }}</li>
+		{% endfor %}
+		</ul>
+		<ul>
+		{% for adds in order.addition.all %}
+			<li>{{ adds }}</li>
+		{% endfor %}
+		</ul>
+	</td>
+	<td class = "item_order_right">
+		${{ order.menu.cost }}
+	</td>
+</tr>
+{% endfor %}
+<tr>
+	<td class ="bottom_left">Total</td>
+	<td class = "bottom_right">$ {{ total }}</td>
+</tr>
+</table>
+
+<div id = "checkout_button_div"><a href = "{% url 'confirm' %}"><button id = "checkout_button">Check Out</button></a></div>
+</div>
+{% endblock %}
+
+

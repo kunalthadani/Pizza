@@ -1,0 +1,56 @@
+{% extends "orders/layout.html" %}
+{% load static %}
+
+
+{% block others %}
+<script src = "{% static 'orders/script.js' %}"></script>
+<link rel = "stylesheet" href = "{% static 'orders/stylemenu.css' %}">
+<link rel = "stylesheet" href = "{% static 'orders/navbar.css' %}">
+{% endblock %}
+
+{% block body %}
+<nav>
+	<a href = "{% url 'logout' %}">Sign Out</a>
+	<a href = "{% url 'previous' %}">Previous Orders</a>
+	<a href = "{% url 'index' %}">Home</a>
+	{% if request.user.is_superuser %}
+	<a href = "{% url 'orders' %}">Admin Page</a>
+	{% endif %}
+</nav>
+{% for item in menu %}
+<div class = "items">
+	<table>
+		<tr>
+			<td><span class = "item_name">{{ item.name }} </span><br><span class = "item_size">{{ item.size }}</span><br><span class = "item_cost">${{item.cost}}</span></td>
+			<td class="button_right"><button data-item_id="{{ item.id }}" data-no_toppings = "{{ item.no_of_toppings }}" data-cost = "{{ item.cost }}" data-size = "{{ item.size }}" data-name = "{{ item.name }}"class = "add_button">Add to Cart</button></td>
+		</tr>
+	</table>
+</div>
+{% endfor %}
+
+<!-- Toppings -->
+<div class = "topping">
+	<div class = "details">
+					<span id = "name_order"></span><br>
+					<span id = "size_order"></span>
+	</div>
+	<form action = "{% url 'cart' %}" method="post">
+		{% csrf_token %}
+		<div class = "top_div">
+		{% for topping in toppings %}
+		<div class = "topping_box">
+			<label><input type = "checkbox" name = "topping" value = "{{ topping.id }}" class = "topping_check">{{ topping.name }}</label>
+		</div>		
+		{% endfor %}
+		</div>
+		<input type = "hidden" name = "menu_item" id = "menu_item">
+		<div class = "cost_div">
+			<span id = "cost_order"></span>
+		</div>
+		<div class = "toppings-extra"><small id ="toppings-alert"></small></div>
+		<div class = "button_div">
+			<button>Add to Cart</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

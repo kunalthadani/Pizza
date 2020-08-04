@@ -1,0 +1,99 @@
+	.toppings-extra{
+		text-align: center;
+		color: red;
+		font-family: Helvetica;
+		
+	}
+	.item_name{
+		font-size: 1.3em;
+		font-family: Roboto;
+	}
+	.item_size{
+		font-size:1em;
+		font-family: roboto;
+		color: grey;
+	}
+	.item_cost{
+		font-family: roboto;
+		color: green;
+	}
+	.items,.topping{
+		width: 50%;
+		margin: 20px auto;
+		padding: 20px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.01), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+	table{
+		width: 100%;
+	}
+	.button_right{
+		text-align: right;
+	}
+	.button_right button{
+		border: 1px solid green;
+		background:none;
+		font-size: 1.1em;
+		font-family: Roboto;
+		color: green;
+		border-radius: 
+		height:30px;
+		padding: 5px 10px;
+		border-radius: 4px;
+		outline: none;
+	}
+	.button_right button:hover{
+		cursor: pointer;
+		border: none;
+		background-color: green;
+		color: white;
+	}
+	.topping{
+		display: none;
+
+	}
+	.top_div{
+		display: grid;
+		grid-template-columns: auto auto auto auto;
+	}
+	.topping_box{
+		margin-left: 10px;  
+		font-family: roboto;
+		color: green;
+		font-size: 1.3em;
+	}
+	.button_div{
+		text-align: center;
+	}
+	.button_div button{
+	font-size: 1.1em;\
+	font-family: Helvetica;
+	width:25%;
+	height: 30px;
+	margin-top: 20px;
+	border: none;
+	background-color: green;
+	color: white;
+	/*border-radius: 10px;*/
+	}
+	.details{
+		text-align: center;
+	}
+	#name_order{
+		font-family: helvetica;
+		font-size: 1.8em;
+	}
+	#cost_order,#size_order{
+		font-family: helvetica;
+			
+	}
+	#size_order{
+		font-size: 1em;
+		color: green;
+	}
+	#cost_order{
+		font-size: 1.5em;
+		color: grey;
+	}
+	.cost_div{
+		text-align: center;
+	}

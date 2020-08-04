@@ -1,0 +1,47 @@
+{% extends 'orders/layout.html' %}
+
+{% load static %}
+
+{% block others %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel = "stylesheet" href = "{% static 'orders/style.css' %}">
+<link rel = "stylesheet" href = "{% static 'orders/navbar.css' %}">
+{% endblock %}
+
+{% block body %}
+
+<nav>
+	<a href = "{% url 'logout' %}">Sign Out</a>
+	<a href = "{% url 'index' %}">User Home</a>
+</nav>
+{% for order in orders %}
+<div class="card" style="width:500px;margin: 20px auto;">
+	<h5 class="card-header">{{order.placed_by}}</h5>
+	<div class="card-body">
+		<table>
+		{% for item in order.order.all %}
+			<tr class = "item_order">
+				<td class = "item_order_left">
+					<span class = "item_category">{{ item.menu.category }}</span><br>
+					<span class = "item_name">{{ item.menu.name }}</span>
+					<ul>
+					{% for top in item.topping.all %}
+						<li>- {{ top }}</li>
+					{% endfor %}
+					</ul>
+					<ul>
+					{% for adds in item.addition.all %}
+						<li>{{ adds }}</li>
+					{% endfor %}
+					</ul>
+				</td>
+			<td class = "item_order_right">
+				${{ item.menu.cost }}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+</div>
+{% endfor %}
+{% endblock %}
